@@ -1,37 +1,38 @@
 # configuración e instalación del proyecto real-esrgan
+%%capture
 
 # verificar gpu disponible
-import os
-os.system("nvidia-smi")
+!nvidia-smi
 
 # clonar repositorio desde github
-if not os.path.exists("Real-ESRGAN"):
-    os.system("git clone https://github.com/xinntao/Real-ESRGAN.git")
-
-# entrar a la carpeta del proyecto
-os.chdir("Real-ESRGAN")
+!git clone https://github.com/xinntao/Real-ESRGAN.git
+%cd Real-ESRGAN
 
 # instalar dependencias principales
-os.system("pip install basicsr facexlib gfpgan -q")
-os.system("pip install -r requirements.txt -q")
-os.system("python setup.py develop")
+!pip install basicsr
+!pip install facexlib
+!pip install gfpgan
+!pip install -r requirements.txt
+!python setup.py develop
 
 # importar librerías necesarias
 import shutil
 from tqdm import tqdm
-import sys
+import os
+import shutil, sys
 import re
 import io
 import IPython.display
 import numpy as np
 import PIL.Image
 from google.colab import files
+import shutil
 
 # url del modelo gfpgan
 new_model_path = 'https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.4.pth'
 
 # archivo de inferencia de real-esrgan
-filename = 'inference_realesrgan.py'
+filename = '/content/Real-ESRGAN/inference_realesrgan.py'
 with open(filename, 'r') as f:
     script_content = f.read()
 
@@ -47,7 +48,7 @@ with open(filename, 'w') as f:
     f.write(new_script_content)
 
 # corregir compatibilidad con torchvision
-os.system("sed -i 's/from torchvision.transforms.functional_tensor import rgb_to_grayscale/from torchvision.transforms.functional import rgb_to_grayscale/' /usr/local/lib/python3.10/dist-packages/basicsr/data/degradations.py")
+!sed -i 's/from torchvision.transforms.functional_tensor import rgb_to_grayscale/from torchvision.transforms.functional import rgb_to_grayscale/' /usr/local/lib/python3.10/dist-packages/basicsr/data/degradations.py
 
 # código de degradaciones modificado
 degradations_code = '''import cv2
@@ -113,8 +114,7 @@ python_version = f"python{sys.version_info.major}.{sys.version_info.minor}"
 degradations_path = f'/usr/local/lib/{python_version}/dist-packages/basicsr/data/degradations.py'
 
 # crear respaldo
-if not os.path.exists(f"{degradations_path}.backup"):
-    shutil.copy(degradations_path, f"{degradations_path}.backup")
+!cp -n {degradations_path} {degradations_path}.backup
 
 # escribir nuevo archivo
 with open(degradations_path, 'w') as f:
