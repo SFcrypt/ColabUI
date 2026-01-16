@@ -1,4 +1,3 @@
-%%writefile degradations_custom.py
 import cv2, math, random, torch, numpy as np
 from torch.nn import functional as F
 
@@ -29,24 +28,24 @@ def rgb_to_grayscale(img):
 
 def circular_lowpass_kernel(cutoff, kernel_size, pad_to=0):
     pad_to = pad_to or kernel_size
-    g = torch.linspace(-(kernel_size-1)/2,(kernel_size-1)/2,kernel_size)
+    assert pad_to >= kernel_size
+    def sinc(x): return torch.tensor(1.) if x==0 else torch.sin(x*math.pi)/(x*math.pi)
+    g = torch.linspace(-(kernel_size-1)/2, (kernel_size-1)/2, kernel_size)
     x,y = torch.meshgrid(g,g)
-    k = torch.sinc(torch.sqrt(x**2+y**2)*cutoff)
-    k /= k.sum()
-    return F.pad(k,[(pad_to-kernel_size)//2]*4) if pad_to>kernel_size else k
+    k = sinc(torch.sqrt(x**2+y**2)*cutoff); k /= k.sum()
+    if pad_to>kernel_size: k = F.pad(k,[(pad_to-kernel_size)//2]*4)
+    return k
 
-def random_mixed_kernels(kernel_list, kernel_prob, kernel_size=21,
+def random_mixed_kernels(kernel_list, kernel_prob, kernel_size=21, blur_sigma=0.1,
                           blur_sigma_min=0.1, blur_sigma_max=10.0, pad_to=0):
     pad_to = pad_to or kernel_size
     t = np.random.choice(kernel_list, p=kernel_prob)
-    if t=='iso':
-        return _iso(kernel_size, np.random.uniform(blur_sigma_min,blur_sigma_max), pad_to)
-    if t=='aniso':
-        return _aniso(kernel_size,
-                      np.random.uniform(blur_sigma_min,blur_sigma_max),
-                      np.random.uniform(blur_sigma_min,blur_sigma_max),
-                      np.random.uniform(-np.pi,np.pi), pad_to)
-    return circular_lowpass_kernel(0.1, kernel_size, pad_to)
+    if t=='iso': return _iso(kernel_size, np.random.uniform(blur_sigma_min,blur_sigma_max), pad_to)
+    if t=='aniso': return _aniso(kernel_size,
+                                  np.random.uniform(blur_sigma_min,blur_sigma_max),
+                                  np.random.uniform(blur_sigma_min,blur_sigma_max),
+                                  np.random.uniform(-np.pi,np.pi), pad_to)
+    return circular_lowpass_kernel(blur_sigma, kernel_size, pad_to)
 
 def _iso(k,s,p):
     g = torch.linspace(-(k-1)/2,(k-1)/2,k)
