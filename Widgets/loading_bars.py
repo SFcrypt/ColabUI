@@ -1,13 +1,6 @@
 from IPython.display import display, HTML
 
 def loading_bars(message="", width=200, height=40, bar_height=30, padding_left=0):
-    """
-    message: texto que aparece arriba de la barra
-    width: ancho de la barra
-    height: altura del contenedor de la barra
-    bar_height: altura visual de las líneas
-    padding_left: espacio en píxeles desde la izquierda para el texto
-    """
     html_code = f"""
     <style>
     .loader-container {{
