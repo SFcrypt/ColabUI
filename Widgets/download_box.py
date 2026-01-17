@@ -5,7 +5,7 @@ import threading
 import time
 
 # ================= ESTILOS =================
-def _load_styles():
+def load_styles():
     css = """
     .seg-box {
         background: #232323;
