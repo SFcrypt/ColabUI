@@ -1,4 +1,4 @@
-#@title Pink Button Download Widget
+# ColabUI/Widgets/download_box.py
 import ipywidgets as widgets
 from IPython.display import display, HTML
 
@@ -34,6 +34,80 @@ def load_style():
         width: 90%;           
         margin-bottom: 20px;  
         color: rgba(255,255,255,0.85);  
+        font-size: 16px;
+        text-align: center;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .seg-input-html input::placeholder {
+        color: rgba(255,255,255,0.7);
+    }
+
+    .seg-input-html input:hover {
+        background: #777777;  
+        transform: translateY(-1px);
+    }
+
+    .seg-button-html button {
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .seg-button-html button:hover {
+        transform: translateY(-1px);
+    }
+    """
+    display(HTML(f"<style>{css}</style>"))
+
+# ==============================
+# Función del widget que devuelve el botón y el input
+def pink_button_download(
+    title="Crea tu proyecto",
+    btn_text="Crear",
+    btn_height=35,
+    btn_padding=50,
+    btn_font_size=15,
+    btn_border_radius=12,
+    btn_color="#C41564",          
+    btn_hover_color="#db5a94",    
+    input_placeholder="Nombre del proyecto",
+    input_width="99%",
+    input_font_size=25,
+    input_border_radius=5,
+    input_margin_bottom=15
+):
+    load_style()
+
+    # Crear input tipo Text (para poder leer value)
+    input_text = widgets.Text(
+        placeholder=input_placeholder,
+        layout=widgets.Layout(width=input_width, margin=f"0 0 {input_margin_bottom}px 0"),
+        style={"description_width": "initial"}
+    )
+    input_text.add_class("seg-input")
+    input_text.style.placeholder_color = '#d0d0d099'
+
+    # Crear botón
+    button = widgets.Button(
+        description=btn_text,
+        layout=widgets.Layout(height=f"{btn_height}px", width="auto", padding=f"0 {btn_padding}px"),
+        style={"button_color": btn_color, "font_size": f"{btn_font_size}px"}
+    )
+    button.add_class("seg-button")
+
+    # Caja principal
+    box = widgets.VBox([
+        widgets.HTML(f"<div class='seg-title'>{title}</div>"),
+        input_text,
+        button
+    ])
+    box.add_class("seg-box")
+    display(box)
+
+    # Devolver el botón y el input
+    return button, input_text
         font-size: 16px;
         text-align: center;
         transition: background 0.3s ease, transform 0.2s ease;
