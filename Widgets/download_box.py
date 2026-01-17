@@ -1,11 +1,9 @@
-# Diseño de caja negro gris y rosa
-# ================================
-
-# Download_box.py
+#@title Pink Button Download Widget
 import ipywidgets as widgets
-from IPython.display import clear_output, display, HTML
+from IPython.display import display, HTML
 
-# Estilos de caja
+# ==============================
+# Estilos CSS
 def load_style():
     css = """
     .seg-box {
@@ -14,87 +12,116 @@ def load_style():
         padding: 20px;
         width: 360px;
         font-family: 'Source Sans Pro', sans-serif;
-        text-align: center;}
-
-    .seg-title {
-        color: rgba(255,255,255,0.25);
-        font-size: 20px;
-        font-weight: 200;
-        margin-bottom: 16px;}
-
-    /* INPUT */
-    .seg-input input {
-        background: transparent;
-        border: 1px solid rgba(255,255,255,0.25);
-        border-radius: 6px;
-        padding: 10px;
-        width: 100%;
-        color: white;
         text-align: center;
-        font-size: 14px;}
-
-    .seg-input input::placeholder {
-        color: rgba(255,255,255,0.35);
-        text-align: center;}
-
-    /* BOTÓN CREAR tipo Download, rosa con borde más redondo */
-    .seg-button {
-        width: auto;
-        display: inline-block;
-        margin-top: 5px;}
-
-    .seg-button button {
-        background: #C41564; /* rosa */
-        color: #ffffff;
-        border: none;
-        border-radius: 16px; /* más redondo */
-        height: 34px;        
-        padding: 0 36px;     /* ancho aumentado */
-        font-size: 13px;     
-        font-weight: 600;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-        transition: background 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 
-    .seg-button button:hover {
-        background: #e03b81;   /* rosa más claro al pasar */
+    .seg-title {
+        color: rgba(255,255,255,0.85);  /* Gris-blanco */
+        font-size: 20px;
+        font-weight: 200;
+        margin-bottom: 8px;  /* Subido un poco */
+    }
+
+    .seg-input-html input {
+        background: #555555;  /* Gris en lugar de rosa */
+        border: none;
+        border-radius: 12px;
+        padding: 12px 0;
+        width: 90%;           
+        margin-bottom: 20px;  
+        color: rgba(255,255,255,0.85);  /* Letras gris-blanco */
+        font-size: 16px;
+        text-align: center;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .seg-input-html input::placeholder {
+        color: rgba(255,255,255,0.7);
+    }
+
+    .seg-input-html input:hover {
+        background: #777777;  /* Gris más claro al pasar el mouse */
+        transform: translateY(-1px);
+    }
+
+    .seg-button-html button {
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .seg-button-html button:hover {
+        transform: translateY(-1px);
     }
     """
     display(HTML(f"<style>{css}</style>"))
 
-# ===============
-# diseño Widget 
-def pink_download(title="SegsMaker"):
+# ==============================
+# Función del widget
+def pink_button_download(
+    title="Mitsuri Kanroji",
+    btn_text="Crear",
+    btn_height=35,
+    btn_padding=50,
+    btn_font_size=15,
+    btn_border_radius=12,
+    btn_color="#C41564",          # Botón rosa
+    btn_hover_color="#db5a94",    # Rosa más claro al pasar el mouse
+    input_placeholder="Nombre del proyecto",
+    input_width="99%",
+    input_font_size=25,
+    input_border_radius=5,
+    input_margin_bottom=15
+):
+    # Cargar estilos
     load_style()
 
     # Input
-    nombre_input = widgets.Text(
-        placeholder="Nombre del proyecto",
-        layout=widgets.Layout(width="100%", margin="0 0 15px 0"))
-    nombre_input.add_class("seg-input")
+    nombre_input_html = widgets.HTML(
+        f"""
+        <div class='seg-input-html'>
+            <input type='text' placeholder='{input_placeholder}'
+                   style='width:{input_width}; font-size:{input_font_size}px; border-radius:{input_border_radius}px; margin-bottom:{input_margin_bottom}px;'>
+        </div>
+        """)
 
-    # Botón Crear
-    crear_btn = widgets.Button(description="Crear")
-    crear_btn.add_class("seg-button")
-    crear_btn.layout.width = "160px"
-    crear_btn.layout.height = "34px"
-    crear_btn.style.button_color = "#C41564"
-    crear_btn.style.font_weight = "bold"
-    crear_btn.style.font_size = "13px"
+    # Botón
+    button_style = f"""
+    height: {btn_height}px;
+    padding: 0 {btn_padding}px;
+    font-size: {btn_font_size}px;
+    border-radius: {btn_border_radius}px;
+    background: {btn_color};
+    """
+    crear_btn_html = widgets.HTML(
+        f"""
+        <div class='seg-button-html'>
+            <button style='{button_style}'
+                    onmouseover="this.style.background='{btn_hover_color}'"
+                    onmouseout="this.style.background='{btn_color}'">
+                {btn_text}
+            </button>
+        </div>
+        """)
 
-    # Caja final
+    # Caja principal
     box = widgets.Box(
         [widgets.HTML(f"<div class='seg-title'>{title}</div>"),
-         nombre_input,
-         crear_btn],
+         nombre_input_html,
+         crear_btn_html],
         layout=widgets.Layout(
-            width="360px",
+            width="100%",
             display="flex",
             flex_flow="column",
             align_items="center",
-            justify_content="space-around")
-    )
+            justify_content="center"))
     box.add_class("seg-box")
     display(box)
+
+# ==============================
+# Fin del módulo
