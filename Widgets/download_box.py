@@ -97,7 +97,7 @@ def load_styles():
 
 # ================= WIDGET =================
 def segsmaker_download_box(title="SegsMaker"):
-    _load_styles()
+    load_styles()
 
     # Input
     nombre_input = widgets.Text(
