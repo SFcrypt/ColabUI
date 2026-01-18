@@ -7,7 +7,7 @@ from IPython.display import display, HTML
 def load_style():
     css = """
     .seg-box {
-        background: #232323;
+        background: #1E1F21;
         border-radius: 12px;
         padding: 25px;
         width: 100%;           
