@@ -33,7 +33,7 @@ def animated_status(
         align-items:center;
         justify-content:center;
         font-family:'Source Sans Pro', sans-serif;
-        padding:26px 0;
+        padding:28px 0;
         border-radius:12px;
     ">
         <!-- Título -->
