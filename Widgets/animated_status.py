@@ -5,7 +5,7 @@ def animated_status(
     title="Proyecto",
     button_text="Listo",
     background_color="#232323",
-    button_colors=("#ff4fa3", "#c41564", "#ff77b7"),
+    button_colors=("#f760a8", "#ed1570", "#f760a8"),
     title_color="rgba(255,255,255,0.9)",
     min_height="120px"
 ):
