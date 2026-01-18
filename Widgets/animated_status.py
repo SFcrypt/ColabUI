@@ -6,6 +6,7 @@ def animated_status(
     background_color="#1E1F21",
     button_colors=("#ed1570", "#f760a8", "#ed1570"),
     title_color="rgba(255,255,255,0.9)",
+    padding="10px 0",
     min_height="120px"
 ):
     """
@@ -32,7 +33,7 @@ def animated_status(
         align-items:center;
         justify-content:center;
         font-family:'Source Sans Pro', sans-serif;
-        padding:10px 0;
+        padding:{padding};
         border-radius:12px;
     ">
         <!-- Título -->
