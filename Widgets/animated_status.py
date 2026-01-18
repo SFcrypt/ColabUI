@@ -1,11 +1,10 @@
 from IPython.display import display, HTML
 
-
-def animated_status(
+def animated_statuss(
     title="Proyecto",
     button_text="Listo",
     background_color="#232323",
-    button_colors=("#f760a8", "#ed1570", "#f760a8"),
+    button_colors=("#ed1570", "#f760a8", "#ed1570"),
     title_color="rgba(255,255,255,0.9)",
     min_height="120px"
 ):
@@ -52,11 +51,11 @@ def animated_status(
             border:none;
             border-radius:16px;
             background:linear-gradient(270deg,{c1},{c2},{c3});
-            background-size:400% 400%;
+            background-size:200% 200%;
             animation:pinkMove 4s ease infinite;
             color:#ffffff;
             font-size:25px;
-            padding:18px 60px;
+            padding:10px 80px;
             cursor:default;
             pointer-events:none;
             box-shadow:0 4px 12px rgba(0,0,0,0.35);
