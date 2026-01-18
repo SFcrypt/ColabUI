@@ -55,7 +55,7 @@ def animated_status(
             animation:pinkMove 4s ease infinite;
             color:#ffffff;
             font-size:25px;
-            padding:10px 80px;
+            padding:8px 80px;
             cursor:default;
             pointer-events:none;
             box-shadow:0 4px 12px rgba(0,0,0,0.35);
