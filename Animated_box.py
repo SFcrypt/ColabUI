@@ -1,4 +1,4 @@
-#Colabui download_box.py
+#Colabui caja de opciones 
 
 import ipywidgets as widgets
 from IPython.display import display, HTML
