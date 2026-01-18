@@ -11,14 +11,6 @@ def animated_status(
 ):
     """
     Caja visual de estado con botón rosa animado (solo decorativo)
-
-    Parámetros:
-    - title (str): texto principal
-    - button_text (str): texto del botón
-    - background_color (str): color del fondo
-    - button_colors (tuple): colores del gradiente del botón
-    - title_color (str): color del título
-    - min_height (str): altura mínima del contenedor
     """
 
     c1, c2, c3 = button_colors
@@ -42,6 +34,7 @@ def animated_status(
         justify-content:center;
         font-family:'Source Sans Pro', sans-serif;
         padding:25px 0;
+        border-radius:12px;
     ">
         <!-- Título -->
         <div style="
