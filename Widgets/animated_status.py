@@ -1,0 +1,74 @@
+from IPython.display import display, HTML
+
+
+def animated_status(
+    title="Proyecto",
+    button_text="Listo",
+    background_color="#232323",
+    button_colors=("#ff4fa3", "#c41564", "#ff77b7"),
+    title_color="rgba(255,255,255,0.9)",
+    min_height="120px"
+):
+    """
+    Caja visual de estado con botón rosa animado (solo decorativo)
+
+    Parámetros:
+    - title (str): texto principal
+    - button_text (str): texto del botón
+    - background_color (str): color del fondo
+    - button_colors (tuple): colores del gradiente del botón
+    - title_color (str): color del título
+    - min_height (str): altura mínima del contenedor
+    """
+
+    c1, c2, c3 = button_colors
+
+    display(HTML(f"""
+    <style>
+    @keyframes pinkMove {{
+        0% {{ background-position: 0% 50%; }}
+        50% {{ background-position: 100% 50%; }}
+        100% {{ background-position: 0% 50%; }}
+    }}
+    </style>
+
+    <div style="
+        background:{background_color};
+        width:100%;
+        min-height:{min_height};
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        font-family:'Source Sans Pro', sans-serif;
+        padding:25px 0;
+    ">
+        <!-- Título -->
+        <div style="
+            color:{title_color};
+            font-size:25px;
+            font-weight:500;
+            margin-bottom:12px;
+            text-align:center;
+        ">
+            {title}
+        </div>
+
+        <!-- Botón decorativo -->
+        <button style="
+            border:none;
+            border-radius:16px;
+            background:linear-gradient(270deg,{c1},{c2},{c3});
+            background-size:400% 400%;
+            animation:pinkMove 4s ease infinite;
+            color:#ffffff;
+            font-size:25px;
+            padding:18px 60px;
+            cursor:default;
+            pointer-events:none;
+            box-shadow:0 4px 12px rgba(0,0,0,0.35);
+        ">
+            {button_text}
+        </button>
+    </div>
+    """))
