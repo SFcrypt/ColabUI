@@ -2,7 +2,7 @@
 from IPython.display import display, HTML
 
 # Configuración de la barra
-class Animated_Progress:
+class Animated_progress:
     def __init__(
         self,
         total,
