@@ -1,6 +1,6 @@
 from IPython.display import display, HTML
 
-def animated_statuss(
+def animated_status(
     title="Proyecto",
     button_text="Listo",
     background_color="#232323",
