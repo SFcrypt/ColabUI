@@ -3,7 +3,7 @@ from IPython.display import display, HTML
 def animated_status(
     title="Proyecto",
     button_text="Listo",
-    background_color="#232323",
+    background_color="#1E1F21",
     button_colors=("#ed1570", "#f760a8", "#ed1570"),
     title_color="rgba(255,255,255,0.9)",
     min_height="120px"
